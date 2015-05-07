@@ -16,8 +16,8 @@
         android:layout_marginTop="29dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/knockCameraImageView"
         android:layout_below="@+id/knockText"
         android:layout_alignStart="@+id/knockText"

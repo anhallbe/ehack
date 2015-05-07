@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            SenseService sense = new SenseService(SENSE_URL, SENSE_PORT, SenseService.INTERVAL_SLOW, START_POLLING);
+            SenseService sense = new SenseService(SENSE_URL, SENSE_PORT, SenseService.INTERVAL_FAST, START_POLLING);
             Log.d("WaitForUpdates", "SenseService started.");
 
             sense.subscribe(SUBSCRIPTION_QUERY_KNOCK, new UpdateListener() {
@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
             sense.subscribe(SUBSCRIPTION_TEMPERATURE, new UpdateListener() {
                 @Override
                 public void onUpdate(SensorPub sensorPub) {
-                    double tempValue = (double) sensorPub.getValue();
+                    double tempValue = Double.parseDouble(sensorPub.getValue().toString());
                     Log.d("WaitForUpdates", "Temperature is " + tempValue);
                 }
             });

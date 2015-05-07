@@ -7,8 +7,7 @@ sudo python setup.py install
 
 """
 from webiopi import deviceInstance
-#from webiopi.devices.analog import MCP3208
-webiopi.devices.analog.MCP3208
+from webiopi.devices.analog.mcp3x0x import MCP3208
 import optparse
 import sense
 import time
@@ -26,7 +25,7 @@ class Sensor(MCP3208):
     def status(self):
         return "REF: {0}, RES: {1}".format(self.analogReference(), self.analogResolution)
 
-    def temp(self):
+    def temperature(self):
         return float(self.analogReadVolt(TEMPERATURE_CHANNEL))
 
     def light(self):

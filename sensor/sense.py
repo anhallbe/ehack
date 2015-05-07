@@ -14,13 +14,15 @@ class Sense:
         self.get_ip()
 
     def report(self, name, desc, valueType, value):
-        params = urllib.urlencode({'name': name, 'description': desc, 'valueType': valueType, 'value': value})
+        d = {'name': name, 'description': desc, 'valueType': valueType, 'value': value}
+        print("Reporting: {0}".format(str(d)))
+        params = urllib.urlencode(d)
         # h = httplib2.Http(".cache") # WAT?
         # resp, content = h.request(SENSE_ADDR+":"+SENSE_PORT, "POST", params)
         # print resp.status, resp.reason
         # print content
         # data = json.dumps({'name': name, 'description': desc, 'valueType': valueType, 'value': value})
-        # print("Reporting: {0}".format(str(data)))
+
         # r = requests.post(SENSE_ADDR, data)
         # print r.json
 

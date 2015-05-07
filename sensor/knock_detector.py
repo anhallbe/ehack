@@ -10,7 +10,7 @@ import time
 import sense
 
 SEQUENCE_TIMEOUT = 5   #seconds
-REQUIRED_KNOCKS = 3    #Nr knocks
+REQUIRED_KNOCKS = 5    #Nr knocks
 
 
 class Detector():
@@ -30,16 +30,18 @@ class Detector():
         new_activity = list()
         self.activity.append(t1)
         for t in self.activity:
-            print self.activity, (t1 - t).total_seconds()
+            #print self.activity, (t1 - t).total_seconds()
             if (t1 - t).total_seconds() < SEQUENCE_TIMEOUT:
                 count += 1
                 new_activity.append(t) #delete elemnts that are too old
         self.activity = new_activity
         if count >= REQUIRED_KNOCKS:
             self.report_knock()
+            #print "report"
             count = 0
+            self.activity = list()
             time.sleep(2)
-        time.sleep(0.05)
+        time.sleep(0.5)
 
 
 if __name__ == "__main__":

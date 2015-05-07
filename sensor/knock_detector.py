@@ -9,8 +9,8 @@ import sensor
 import time
 import sense
 
-SEQUENCE_TIMEOUT = 5000   #millis
-REQUIRED_KNOCKS = 3
+SEQUENCE_TIMEOUT = 5   #seconds
+REQUIRED_KNOCKS = 3    #Nr knocks
 
 
 class Detector():
@@ -22,8 +22,9 @@ class Detector():
     def report_knock(self):
         self.sense.report("knockSensor", "Someone knocked on the door", "string", self.sense.ip)
 
-    def detect_sequence(self, ):
-        self.sensor.read(blocking=True)
+    def detect_sequence(self,):
+        while not self.sensor.read():
+            pass
 
         t1 = dt.now()
         count = 0
@@ -31,7 +32,7 @@ class Detector():
         self.activity.append(t1)
         for t in self.activity:
             print self.activity, (t1 - t).total_seconds()
-            if (t1 - t).total_seconds() < 5:
+            if (t1 - t).total_seconds() < SEQUENCE_TIMEOUT:
                 count += 1
                 new_activity.append(t) #delete elemnts that are too old
         self.activity = new_activity

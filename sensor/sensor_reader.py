@@ -12,22 +12,30 @@ import optparse
 import sense
 import time
 
-
-
 TEMPERATURE_CHANNEL = 0
 LIGHT_CHANNEL = 1
 
+VREF = 3300
+ARES = 4096.0
 
 class Sensor(MCP3208):
     def __init__(self):
         #super(Sensor, self).__init__()
         MCP3208.__init__(self)
-
     def status(self):
-        return "REF: {0}, RES: {1}".format(self.analogReference(), self.analogResolution)
+        return "REF: {0}, RES: {1}".format(self.analogReference(), self.analogResolution())
 
     def temperature(self):
-        return float(self.analogReadVolt(TEMPERATURE_CHANNEL))
+        """Sensor transfer function:
+            Vout = Tc*Ta+V0c
+            Ta: ambient temp, Vout: output voltage, V0c: Output at 0C, Tc: temp Coef
+        """
+        samples = list()
+        for x in range(10):
+                samples.append(((self.analogRead(TEMPERATURE_CHANNEL)*(VREF/ARES))-500)/10)
+        temp = sum(samples)
+        temp = temp/10
+        return temp
 
     def light(self):
         return float(self.analogReadVolt(LIGHT_CHANNEL))
@@ -52,7 +60,7 @@ def get_parameters():
     parser = optparse.OptionParser(add_help_option=False, option_class=MyOption)
     parser.add_option("-l", "--light", action="store_true", dest="light",
                       help='Get light sensor value')
-    parser.add_option("-t", "--temp", action="store_true", dest="temperature",
+    parser.add_option("-t", "--temperature", action="store_true", dest="temperature",
                       help='Get temperature sensor value')
     parser.add_option("-s", "--status", action="store_true", dest="status",
                       help='Get sensor status')
@@ -74,7 +82,7 @@ if __name__ == "__main__":
     s = Sensor()
     if opts.report:
         report(s)
-    elif opts.temp:
+    elif opts.temperature:
         print s.temperature()
     elif opts.light:
         print s.light()

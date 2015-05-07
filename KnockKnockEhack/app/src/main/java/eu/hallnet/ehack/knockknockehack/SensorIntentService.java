@@ -42,7 +42,7 @@ public class SensorIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-        final String SUBSCRIPTION_QUERY_KNOCK = "name:knockSensor AND front door";
+        final String SUBSCRIPTION_QUERY_KNOCK = "name:cameraSense AND the door";
         final String SUBSCRIPTION_TEMPERATURE = "name:temperatureSensor AND valueType:double";
         final String SENSE_URL = "ec2.hallnet.eu";
         final int SENSE_PORT = 1337;
@@ -57,7 +57,7 @@ public class SensorIntentService extends IntentService {
             public void onUpdate(SensorPub sensorPub) {
                 Log.d("WaitForUpdates", "Somebody knocked. Value: " + sensorPub.getValue());
 
-                String imageURL = "http://213.159.191.231:8080/media/img.jpg"; //Lundhs Pi
+                String imageURL = (String) sensorPub.getValue();//"http://213.159.191.231:8080/media/img.jpg"; //Lundhs Pi
                 try {
                     InputStream in = new URL(imageURL).openStream();
                     final Bitmap imageMap = BitmapFactory.decodeStream(in);

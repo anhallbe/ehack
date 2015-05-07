@@ -6,7 +6,7 @@ class Sensor():
     """
     Digital sensor used to amplify and digitalize the signal generated from the peizo element
     """
-    def __init__(self, digital_in=23, digital_out=24):
+    def __init__(self, digital_in=17, digital_out=24):
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(digital_in, GPIO.IN)
         GPIO.setup(digital_out, GPIO.OUT)

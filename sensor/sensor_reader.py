@@ -7,7 +7,8 @@ sudo python setup.py install
 
 """
 from webiopi import deviceInstance
-from webiopi.devices.analog import MCP3208
+#from webiopi.devices.analog import MCP3208
+webiopi.devices.analog.MCP3208
 import optparse
 import sense
 import time

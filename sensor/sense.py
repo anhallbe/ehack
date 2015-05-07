@@ -1,8 +1,7 @@
 __author__ = 'lundh'
 
-
-import httplib2, urllib
-from urllib2 import urlopen
+import urllib, urllib2
+from urllib import urlopen
 import requests
 import json
 
@@ -16,15 +15,19 @@ class Sense:
         self.get_ip()
 
     def report(self, name, desc, valueType, value):
-        # params = urllib.urlencode({'name': name, 'description': desc, 'valueType': valueType, 'value': value})
+        params = urllib.urlencode({'name': name, 'description': desc, 'valueType': valueType, 'value': value})
         # h = httplib2.Http(".cache") # WAT?
         # resp, content = h.request(SENSE_ADDR+":"+SENSE_PORT, "POST", params)
         # print resp.status, resp.reason
         # print content
-        data = json.dumps({'name': name, 'description': desc, 'valueType': valueType, 'value': value})
-        print("Reporting: {0}".format(str(data)))
-        r = requests.post(SENSE_ADDR, data)
-        print r.json
+        # data = json.dumps({'name': name, 'description': desc, 'valueType': valueType, 'value': value})
+        # print("Reporting: {0}".format(str(data)))
+        # r = requests.post(SENSE_ADDR, data)
+        # print r.json
+
+        request = urllib2.Request(SENSE_ADDR, params) # Manual encoding required
+        handler = urllib2.urlopen(request)
+        print handler.read()
 
     def get_ip(self):
         url = 'http://api.hostip.info/get_json.php'

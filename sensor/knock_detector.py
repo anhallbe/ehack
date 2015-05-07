@@ -26,10 +26,11 @@ class Detector():
         self.sensor.read(blocking=True)
 
         t1 = dt.now()
-        self.activity.append(t1)
         count = 0
         new_activity = list()
+        self.activity.append(t1)
         for t in self.activity:
+            print self.activity, (t1 - t).total_seconds()
             if (t1 - t).total_seconds() < 5:
                 count += 1
                 new_activity.append(t) #delete elemnts that are too old

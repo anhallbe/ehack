@@ -2,7 +2,6 @@ __author__ = 'lundh'
 
 import urllib, urllib2
 from urllib import urlopen
-import requests
 import json
 
 SENSE_ADDR = "http://ec2.hallnet.eu:1337/sensor"

@@ -20,7 +20,8 @@ LIGHT_CHANNEL = 1
 
 class Sensor(MCP3208):
     def __init__(self):
-        super(Sensor, self).__init__()
+        #super(Sensor, self).__init__()
+        MCP3208.__init__(self)
 
     def status(self):
         return "REF: {0}, RES: {1}".format(self.analogReference(), self.analogResolution)

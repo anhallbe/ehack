@@ -23,8 +23,7 @@ class Detector():
         self.sense.report("knockSensor", "Someone knocked on the door", "string", self.sense.ip)
 
     def detect_sequence(self,):
-        while not self.sensor.read():
-            pass
+        self.sensor.read(blocking=True)
 
         t1 = dt.now()
         count = 0
@@ -38,7 +37,9 @@ class Detector():
         self.activity = new_activity
         if count >= REQUIRED_KNOCKS:
             self.report_knock()
-        time.sleep(0.01)
+            count = 0
+            time.sleep(2)
+        time.sleep(0.05)
 
 
 if __name__ == "__main__":
